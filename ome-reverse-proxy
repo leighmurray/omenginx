@@ -1,0 +1,41 @@
+server {
+
+    server_name hah.gay;
+
+    location / {
+        proxy_pass http://websocket;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+    }
+
+        listen 158.39.75.19:3333 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/hah.gay/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/hah.gay/privkey.pem; # managed by Certbot
+        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+
+}
+
+server {
+
+    server_name hah.gay;
+
+    location / {
+        proxy_pass http://hls;
+        proxy_http_version 1.1;
+        #proxy_set_header Upgrade $http_upgrade;
+        #proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+    }
+
+        listen 158.39.75.19:8080 ssl; # managed by Certbot
+        ssl_certificate /etc/letsencrypt/live/hah.gay/fullchain.pem; # managed by Certbot
+        ssl_certificate_key /etc/letsencrypt/live/hah.gay/privkey.pem; # managed by Certbot
+        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}

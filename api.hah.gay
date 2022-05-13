@@ -1,0 +1,22 @@
+server {
+        server_name api.hah.gay;
+        location / {
+            proxy_pass       http://127.0.0.1:8888;
+        }
+
+	location ~ "\/vod\/([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})" {
+	    root /persistent01/recording/default/app/;
+            try_files /$1.ts =404;
+            sendfile on;
+            sendfile_max_chunk 1m;
+	}
+
+        listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/hah.gay/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/hah.gay/privkey.pem; # managed by Certbot
+        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+
+}

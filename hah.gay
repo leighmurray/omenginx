@@ -1,0 +1,43 @@
+# Virtual Host configuration for example.com
+#
+# You can move that to a different file under sites-available/ and symlink that
+# to sites-enabled/ to enable it.
+#
+server {
+	server_name hah.gay;
+
+	root /var/www/hah.gay;
+	index index.html;
+
+        location /favicon.ico {
+            alias /var/www/hah.gay/favicon.ico;
+        }
+
+        location = /webstream {
+		try_files /webstream.html =404;
+	}
+
+	location = /sw.js {
+		try_files /sw.js =404;
+	}
+
+	location /static/ {
+
+	}
+
+        location = / {
+                try_files /watch.html =404;
+        }
+
+	location / {
+		try_files /index.html =404;
+	}
+
+        listen 443 ssl; # managed by Certbot
+        ssl_certificate /etc/letsencrypt/live/hah.gay/fullchain.pem; # managed by Certbot
+        ssl_certificate_key /etc/letsencrypt/live/hah.gay/privkey.pem; # managed by Certbot
+        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
